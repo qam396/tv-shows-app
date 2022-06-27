@@ -1,7 +1,7 @@
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount, RouterLinkStub, shallowMount } from '@vue/test-utils'
 import TVShowCard from '@/dashboard/TVShowCard.vue'
 
-describe('Give props value to the component', () => {
+describe('Given props value to the component', () => {
   describe('When component is loaded', () => {
     describe('Then props value should be in the template', () => {
 
@@ -10,7 +10,7 @@ describe('Give props value to the component', () => {
       beforeEach(() => {
         wrapper = mount(TVShowCard, {
           props: {
-            show : {
+            show: {
               name: 'best show',
               image: {
                 medium: 'imagePath'
@@ -19,7 +19,12 @@ describe('Give props value to the component', () => {
                 average: '6.4'
               },
               premiered: '24-07-2014'
-            }            
+            }   
+          },
+          global: {
+            stubs: {
+              RouterLink: RouterLinkStub
+            }
           }
         })
       })
