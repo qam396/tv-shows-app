@@ -1,5 +1,14 @@
 # tv-shows-app
 
+## Technologies
+Project is created with:
+* Vue3
+* Vuex (for state management)
+* Reuter (for routing) 
+* Axios (for api calls)
+* Jest (for unit tests)
+* Some other party libraries i.e. vue-spinner, sass-loader, moment
+
 ## Project setup
 ```
 npm install
