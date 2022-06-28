@@ -3,10 +3,9 @@ import { createStore } from 'vuex'
 import SearchResults from '@/dashboard/SearchResults.vue'
 import { show } from "./mocks/generator"
 
-describe('Given search string', () => {
-  describe('When component is loaded', () => {
-    describe('Then template should have filtered result', () => {
-
+describe('SearchResults', () => {
+  describe('Given search string to search result component', () => {
+    describe('When component is loaded', () => {
       let wrapper = {}
 
       beforeEach(() => {
@@ -28,7 +27,7 @@ describe('Given search string', () => {
         })        
       })
 
-      it('Should contains name in the title', () => {
+      it('Then we expect html should contains name in the title', () => {
         expect(wrapper.html()).toContain(show.name)
       })
     })

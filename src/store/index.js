@@ -1,25 +1,31 @@
 import { API_BASE_URL } from '@/shared/constants'
 import { dateFormatter } from '@/shared/formatter'
 import axios from 'axios'
+import moment from 'moment'
 import { createStore } from 'vuex'
 
 export default createStore({
   state: {
     shows: [],
     searchedShows: [],
-    selectedShow: {}
+    selectedShow: {},
+    selectedShowCast: [],
+    topRatinShows: []
   },
   mutations: {
     updateTVShows (state, shows) {
       state.shows = shows
+      state.topRatinShows = shows.sort((a, b) => ((b.rating.average ?? 0) - (a.rating.average ?? 0))).slice(0, 20)
     },
     updateSearchedTVShows (state, show) {
       state.searchedShows.push(show)
     },
     updateSelectedTVShow (state, show) {
-      console.log(show)
       show.premiered = dateFormatter(show.premiered)
       state.selectedShow = show
+    },
+    updateSelectedTVShowCast (state, cast) {
+      state.selectedShowCast.push(cast)
     }
   },
   actions: {
@@ -39,23 +45,33 @@ export default createStore({
         })
         .catch(console.error)
     },
-    getTVShowDetails ({ commit }, id) {
+    getTVShowDetails ({ commit, state }, id) {
+      state.selectedShowCast = []
       return axios.get(`${API_BASE_URL}/shows/${id}`)
         .then((result) => {
           commit('updateSelectedTVShow', result.data)
+          axios.get(`${API_BASE_URL}/shows/${id}/cast`)
+            .then((result) => {
+              result.data.forEach(cast => {
+                commit('updateSelectedTVShowCast', cast.person)
+              })
+            })
         })
         .catch(console.error)
     }
   },
   getters: {
     newlyReleasedTVShows (state) {
-      return state.shows.sort((a, b) => new Date(b.premiered) - new Date(a.premiered)).slice(0, 20)
+      return state.shows.sort((a, b) => moment(b.premiered) - moment(a.premiered)).slice(0, 20)
     },
     topRatingTVShows (state) {
-      return state.shows.slice().sort((a, b) => a.rating.average - b.rating.average ?? 0).slice(0, 20)
+      return state.topRatinShows
     },
     selectedTVShow (state) {
       return state.selectedShow
+    },
+    selectedTVShowCast (state) {
+      return state.selectedShowCast
     }
   }
 })

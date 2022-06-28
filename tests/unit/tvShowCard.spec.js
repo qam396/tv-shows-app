@@ -1,10 +1,9 @@
 import { mount, RouterLinkStub, shallowMount } from '@vue/test-utils'
 import TVShowCard from '@/dashboard/TVShowCard.vue'
 
-describe('Given props value to the component', () => {
-  describe('When component is loaded', () => {
-    describe('Then props value should be in the template', () => {
-
+describe('TVShowCard', () => {
+  describe('Given tv show card component with filled show prop', () => {
+    describe('When the component is mounted', () => {
       let wrapper = {}
 
       beforeEach(() => {
@@ -29,14 +28,12 @@ describe('Given props value to the component', () => {
         })
       })
 
-      it('Check prop values in the template', () => {
-        console.log(wrapper.html())
+      it('Then we expect show details to be on html', () => {
         expect(wrapper.html()).toContain('best show')
         expect(wrapper.html()).toContain('Image not available')
       })
 
-      it('Check computed values in the component', () => {
-        console.log(wrapper.getComponent(TVShowCard).vm)
+      it('Then we expect the variables to be set in the component', () => {
         expect(wrapper.getComponent(TVShowCard).vm.imagePath).toEqual('imagePath')
         expect(wrapper.getComponent(TVShowCard).vm.showRating).toEqual('6.4')
       })

@@ -28,6 +28,10 @@
           <span>Overview:</span>
           <p v-html="show.summary"></p>
         </div>
+        <div class="show-fact">
+          <span>Cast:</span>
+          <TVShowCast />
+        </div>
       </div>
     </div>
   </div>
@@ -39,8 +43,11 @@ import { onMounted, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
 import { useHead } from '@vueuse/head'
+import TVShowCast from './TVShowCast.vue'
 
 export default {
+  components: { TVShowCast },
+
   setup () {
     const store = useStore()
     const route = useRoute()
